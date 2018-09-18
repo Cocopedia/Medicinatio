@@ -1,4 +1,4 @@
-# 扁鹊
+# 就医前后 Medicinatio
 医学类社交问答网站。
 
 ## Deploy Instructions
