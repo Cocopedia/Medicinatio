@@ -40,8 +40,9 @@ $(function()
 				{
 					$('#search_result').append(response);
 				}
-
-				$('#search_result .aw-title a').highText(split_query, 'span', 'aw-text-color-red');
+ 
+				$('#search_result .aw-title a').highText(search_query, 'span', 'aw-text-color-red');
+				$('#search_result .search-content').highText(search_query, 'span', 'aw-text-color-red');
 
 				$(_this).attr('data-page', parseInt($(_this).attr('data-page')) + 1);
 

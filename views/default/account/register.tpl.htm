@@ -15,7 +15,7 @@
                     <i class="icon icon-delete"></i> <em></em>
                 </li>
                 <li>
-                    <input class="aw-register-name form-control" type="text" name="user_name" placeholder="<?php _e('用户名'); ?>" tips="<?php _e('请输入一个 2-14 位的用户名');?>" errortips="<?php _e('用户名长度不符合');?>" value="" />
+                    <input class="aw-register-name form-control" type="text" name="user_name" placeholder="<?php _e('用户名'); ?>" tips="<?php echo '请输入一个'.intval(get_setting('username_length_min')).'-'.intval(get_setting('username_length_max')).' 位的用户名';?>" errortips="<?php _e('用户名长度不符合');?>" value="" />
                 </li>
                 <li>
                     <input class="aw-register-email form-control" type="text" placeholder="<?php _e('邮箱'); ?>" name="email" tips="<?php _e('请输入你常用的电子邮箱作为你的账号'); ?>" value="<?php echo htmlspecialchars($_GET['email']); ?>" errortips="<?php _e('邮箱格式不正确'); ?>" />
@@ -110,6 +110,7 @@ $(document).ready(function ()
     /* 注册页面验证 */
     function verify_register_form(element)
     {
+
         $(element).find('[type=text], [type=password]').on({
             focus : function()
             {
@@ -126,14 +127,16 @@ $(document).ready(function ()
                     {
                         case 'user_name' :
                             var _this = $(this);
+                            var min_length=<?php echo intval(get_setting('username_length_min'));?>;
+                            var max_length=<?php echo intval(get_setting('username_length_max'));?>;
                             $(this).parent().find('.aw-reg-tips').detach();
-                            if ($(this).val().length >= 0 && $(this).val().length < 2)
+                            if (strlen($(this).val()) >= 0 && strlen($(this).val())< min_length)
                             {
                                 $(this).parent().find('.aw-reg-tips').detach();
                                 $(this).parent().append('<span class="aw-reg-tips aw-reg-err"><i class="aw-icon i-err"></i>' + $(this).attr('errortips') + '</span>');
                                 return;
                             }
-                            if ($(this).val().length > 17)
+                            if (strlen($(this).val()) > max_length)
                             {
                                 $(this).parent().find('.aw-reg-tips').detach();
                                 $(this).parent().append('<span class="aw-reg-tips aw-reg-err"><i class="aw-icon i-err"></i>' + $(this).attr('errortips') + '</span>');
@@ -203,7 +206,20 @@ $(document).ready(function ()
             }
         });
     }
-
+     function strlen(str){  
+        var len = 0;  
+        for (var i=0; i<str.length; i++) {   
+         var c = str.charCodeAt(i);   
+        //单字节加1   
+         if ((c >= 0x0001 && c <= 0x007e) || (0xff60<=c && c<=0xff9f)) {   
+           len++;   
+         }   
+         else {   
+          len+=2;   
+         }   
+        }   
+        return len;  
+    }  
     $('.select_area').LocationSelect({
         labels: ["<?php _e('请选择省份或直辖市'); ?>", "<?php _e('请选择城市'); ?>"],
         elements: document.getElementsByTagName("select"),

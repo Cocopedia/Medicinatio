@@ -240,8 +240,8 @@ FileUpload.prototype =
                 }
 
                 $('#aw-ajax-box').append(iframe);
-
-                $(this.form).find('.submit').click();
+                document.getElementById('upload-form-'+ this.options.tag).submit();
+                //$(this.form).find('.submit').click();
             }
         },
 

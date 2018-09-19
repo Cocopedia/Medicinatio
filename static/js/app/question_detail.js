@@ -10,6 +10,10 @@ $(function()
     //问题页添加评论
     AWS.Init.init_comment_box('.aw-add-comment');
 
+    if (G_ADVANCED_EDITOR_ENABLE == 'Y' && document.getElementById("wmd-input")){
+    	EDITOR = CKEDITOR.replace( 'wmd-input');
+    }
+
 	if ($('#c_log_list').attr('id'))
 	{
 		AWS.load_list_view(G_BASE_URL + '/question/ajax/log/id-' + QUESTION_ID, $('#bp_log_more'), $('#c_log_list'));
@@ -20,22 +24,31 @@ $(function()
 
 		if ($('#wmd-input').length)
 		{
-			if (G_ADVANCED_EDITOR_ENABLE == 'Y')
-			{
-				EDITOR = CKEDITOR.replace( 'wmd-input');
-
-				EDITOR_CALLBACK = function (evt)
-				{
-					if (evt.editor.getData().length)
-					{
-						$.post(G_BASE_URL + '/account/ajax/save_draft/item_id-' + QUESTION_ID + '__type-' + ANSWER_TYPE, 'message=' + evt.editor.getData(), function (result) {
-							$('#answer_content_message').html(result.err + ' <a href="#" onclick="$(\'textarea#advanced_editor\').attr(\'value\', \'\'); AWS.User.delete_draft(QUESTION_ID, ANSWER_TYPE); $(this).parent().html(\' \'); return false;">' + _t('删除草稿') + '</a>');
-						}, 'json');
+			
+			if(G_DRAFT_ENABLED == 'Y'){
+			//富文本
+				if(G_ADVANCED_EDITOR_ENABLE == 'Y'){
+					EDITOR_CALLBACK = function (evt){
+						if (evt.editor.getData().length){
+							$.post(G_BASE_URL + '/account/ajax/save_draft/item_id-' + QUESTION_ID + '__type-' + ANSWER_TYPE, 'message=' + evt.editor.getData(), function (result) {
+								$('#answer_content_message').html(result.err + ' <a href="#" onclick="$(\'textarea#advanced_editor\').attr(\'value\', \'\'); AWS.User.delete_draft(QUESTION_ID, ANSWER_TYPE); $(this).parent().html(\' \'); return false;">' + _t('删除草稿') + '</a>');
+							}, 'json');
+						}
 					}
+					// 自动保存草稿
+					EDITOR.on( 'blur', EDITOR_CALLBACK);
+				}else{
+					//纯文本
+					$('#wmd-input').bind('blur',function(){
+						var  article_textarea = $('#wmd-input').val();
+		                if(article_textarea != ''){
+		                    $.post(G_BASE_URL + '/account/ajax/save_draft/item_id-' + QUESTION_ID + '__type-' + ANSWER_TYPE, 'message=' + article_textarea, function (result) {
+								$('#answer_content_message').html(result.err + ' <a href="#" onclick="$(\'textarea#advanced_editor\').attr(\'value\', \'\'); AWS.User.delete_draft(QUESTION_ID, ANSWER_TYPE); $(this).parent().html(\' \'); return false;">' + _t('删除草稿') + '</a>');
+							}, 'json');
+		                }
+					});
+					
 				}
-
-				// 自动保存草稿
-				EDITOR.on( 'blur', EDITOR_CALLBACK);
 			}
 
 		}
@@ -246,10 +259,53 @@ $(function()
     		$('.aw-question-detail .aw-question-related-box').fadeIn();
     	}
 	});
-
+	// 手动保存草稿
+    $('#draft').click(function() {
+        if (G_ADVANCED_EDITOR_ENABLE == 'Y' && G_DRAFT_ENABLED == 'N'){
+            var  article_textarea = CKEDITOR.instances['wmd-input'].getData();
+        }else{
+            var  article_textarea = $('#wmd-input').val();
+        }
+        if(article_textarea != ''){
+            $.post(G_BASE_URL + '/account/ajax/save_draft/item_id-' + QUESTION_ID + '__type-' + ANSWER_TYPE, 'message=' + article_textarea, function (result) {
+				$('#answer_content_message').html(result.err + ' <a href="#" onclick="$(\'textarea#advanced_editor\').attr(\'value\', \'\'); AWS.User.delete_draft(QUESTION_ID, ANSWER_TYPE); $(this).parent().html(\' \'); return false;">' + _t('删除草稿') + '</a>');
+			}, 'json');
+        }
+    });
     //回复内容超链接新窗口打开
     $('.markitup-box a').attr('target','_blank');
-
+$(function(){setTimeout(uplaodImage,400);});
+//使用FormData形式，将base64图片转换成formData再提交(图片不限制大小)
+function uplaodImage(){
+   EDITOR.on('change',function(e){//content为textarea的id
+              var a = e.editor.document ;
+              var b = a.find("img");
+              var count = b.count();
+              for(var i=0;i<count;i++){
+                       var src =b.getItem(i).$.src;//获取img的src
+                       if(src.substring(0,10)=='data:image'){ //判断是否是二进制图像，是才处理
+                           var img1=src.split(',')[1]; 
+                          var img2=window.atob(img1); 
+                                $.ajax({
+                                        type:"POST",
+                                        url:G_BASE_URL + '/publish/ajax/paste/',//服务器url
+                                        async:false,//同步，因为修改编辑器内容的时候会多次调用change方法，所以要同步，否则会多次调用后台
+                                        data:{data:img1},
+                                        dataType:'json',
+                                        // processData: false,
+                                        // contentType: false,
+                                        success:function(json){
+                                             var imgurl=json.path; //获取回传的图片url
+                                             console.log(json);
+                                              b.getItem(i).$.src=imgurl;
+                                            var a =EDITOR.document.$.getElementsByTagName("img")[i]; //content为textarea的id
+                                            a.setAttribute('data-cke-saved-src',imgurl);
+                                                  }
+                                });
+                       }
+              }
+    });
+}
 });
 
 function one_click_add_topic(selector, topic_title, question_id)

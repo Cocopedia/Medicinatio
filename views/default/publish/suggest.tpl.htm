@@ -6,7 +6,9 @@
 				<div class="col-sm-12 col-md-9 aw-main-content">
 					<!-- tab 切换 -->
 					<ul class="nav nav-tabs aw-nav-tabs active">
+						<?php if (is_website()) { ?>
                         <li class="active"><a href="publish/suggest/"><?php _e('建议'); ?></a></li>
+                        <?php } ?>
 						<li><a href="publish/article/"><?php _e('文章'); ?></a></li>
 						<?php if ($this->user_info['permission']['publish_question']) { ?>
 						<li><a href="publish/"><?php _e('问题'); ?></a></li>

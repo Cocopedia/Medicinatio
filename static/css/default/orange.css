@@ -140,8 +140,8 @@ a.aw-load-more-content{display: block;}
 .aw-dropdown .aw-dropdown-list li{position:relative;height:42px;line-height:42px;padding:0 10px !important;border-top: 1px solid #f0f0f0;cursor: pointer;text-align: left;font-size: 14px;}
 .aw-dropdown .aw-dropdown-list li:first-child{border-top: none;}
 .aw-dropdown .aw-dropdown-list li:hover, .aw-dropdown .aw-dropdown-list li.active{background-color: #f0f0f0;}
-.aw-dropdown .aw-dropdown-list li a{display:block;color: #666;}
-.aw-dropdown .aw-dropdown-list li.topic a{display:inline; line-height:42px;}
+.aw-dropdown .aw-dropdown-list li a{display:block;color: #666; line-height:42px;}
+.aw-dropdown .aw-dropdown-list li.topic a{display:inline;}
 .aw-dropdown .aw-dropdown-list li.topic .topic-tag a{margin-top: 10px;color: #fff;}
 .aw-dropdown .aw-dropdown-list li.question b{line-height: 30px;}
 .aw-dropdown .aw-dropdown-list li.question .icon-bestbg{display: none;margin:15px 5px 0 0;color: #69b5ff;}

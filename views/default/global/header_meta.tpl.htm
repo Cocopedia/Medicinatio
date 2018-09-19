@@ -40,7 +40,7 @@
 	var G_CAN_CREATE_TOPIC = "<?php echo $this->user_info['permission']['create_topic']; ?>";
 	var G_ADVANCED_EDITOR_ENABLE = "<?php echo get_setting('advanced_editor_enable'); ?>";
 	var FILE_TYPES = "<?php echo strtolower(get_setting('allowed_upload_types')); ?>";
-
+	var G_DRAFT_ENABLED = "<?php echo get_setting('draft_enabled'); ?>";
 
 	<?php if (human_valid('question_valid_hour')) { ?>
 	var G_QUICK_PUBLISH_HUMAN_VALID = true;

@@ -48,7 +48,7 @@
 			<b><?php _e('Zlib 支持'); ?></b><?php if (!$this->system_require['zlib']) { ?><span class="red">× <?php _e('WeCenter 的搜索需要 Zlib 支持'); ?></span><?php } else { ?><span class="green">√</span><?php } ?>
 		</li>
 		<li>
-			<b><?php _e('Mcrypt 支持'); ?></b><?php if (!$this->system_require['mcrypt']) { ?><span class="red">× <?php _e('WeCenter 的加密需要 Mcrypt 支持'); ?></span><?php } else { ?><span class="green">√</span><?php } ?>
+			<b><?php _e('openssl 支持'); ?></b><?php if (!$this->system_require['openssl']) { ?><span class="red">× <?php _e('WeCenter 的加密需要 openssl 支持'); ?></span><?php } else { ?><span class="green">√</span><?php } ?>
 		</li>
 		<li>
 			<b><?php _e('编码转换'); ?></b><?php if (!$this->system_require['convert_encoding']) { ?><span class="red">× <?php _e('WeCenter 至少需要有 MB 或 ICONV 编码转换处理库才能正常运行'); ?></span><?php } else { ?><span class="green">√</span><?php } ?>
@@ -60,10 +60,19 @@
 			<b><?php _e('目录权限'); ?></b><span><?php echo AWS_PATH; ?></span><?php if (!$this->system_require['config_writable_core']) { ?><span class="red">×</span><?php } else { ?><span class="green">√</span><?php } ?>
 		</li>
 		<li>
-			<b><?php _e('目录权限'); ?></b><span><?php echo AWS_PATH; ?>config/</span><?php if (!$this->system_require['config_writable_config']) { ?><span class="red">×</span><?php } else { ?><span class="green">√</span><?php } ?>
+			<b><?php _e('配置目录权限'); ?></b><span><?php echo AWS_PATH; ?>config<?php echo DIRECTORY_SEPARATOR; ?></span><?php if (!$this->system_require['config_writable_config']) { ?><span class="red">×</span><?php } else { ?><span class="green">√</span><?php } ?>
+		</li>
+		<li>
+			<b><?php _e('缓存目录权限'); ?></b><span><?php echo ROOT_PATH; ?>cache<?php echo DIRECTORY_SEPARATOR; ?></span><?php if (!$this->system_require['config_writable_cache']) { ?><span class="red">×</span><?php } else { ?><span class="green">√</span><?php } ?>
+		</li>
+		<li>
+			<b><?php _e('临时目录权限'); ?></b><span><?php echo ROOT_PATH; ?>tmp<?php echo DIRECTORY_SEPARATOR; ?></span><?php if (!$this->system_require['config_writable_tmp']) { ?><span class="red">×</span><?php } else { ?><span class="green">√</span><?php } ?>
+		</li>
+		<li>
+			<b><?php _e('上传目录权限'); ?></b><span><?php echo ROOT_PATH; ?>uploads<?php echo DIRECTORY_SEPARATOR; ?></span><?php if (!$this->system_require['config_writable_uploads']) { ?><span class="red">×</span><?php } else { ?><span class="green">√</span><?php } ?>
 		</li>
 	</ul>
-	<a class="btn btn-success pull-right<?php if (sizeof($this->system_require) != 13) { ?> disabled<?php } ?>" <?php if (sizeof($this->system_require) == 13) { ?>onclick="document.getElementById('installer').submit(); this.className='btn btn-success disabled pull-right'; this.onclick='';"<?php } ?>><?php _e('下一步'); ?></a>
+	<a class="btn btn-success pull-right<?php if (sizeof($this->system_require) != 16) { ?> disabled<?php } ?>" <?php if (sizeof($this->system_require) == 16) { ?>onclick="document.getElementById('installer').submit(); this.className='btn btn-success disabled pull-right'; this.onclick='';"<?php } ?>><?php _e('下一步'); ?></a>
 	 </form>
 </div>
 

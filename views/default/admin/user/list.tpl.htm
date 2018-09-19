@@ -1,6 +1,18 @@
 <?php TPL::output('admin/global/header.tpl.htm'); ?>
 <?php TPL::output('admin/global/nav_menu.tpl.htm'); ?>
-
+<style>
+    .table-header-title{
+        float: left;line-height: 50px;
+    }
+    .table-header-icon {
+        float: left;
+    }
+    .table-header-icon-down{margin-top: -10px;}
+    .table-header-icon-down a{
+        display:inline-block;margin-top: -10px;
+    }
+    .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{padding: 4px ! important;;}
+</style>
 <div class="aw-content-wrap" id="user_list">
     <div class="mod">
         <div class="mod-head">
@@ -28,15 +40,80 @@
                                 <th><input type="checkbox" class="check-all"></th>
                                 <th>ID</th>
                                 <th><?php _e('用户名'); ?></th>
-                                <th><?php _e('邮箱'); ?></th>
+                                <th style="width: 100px ! important;"><?php _e('邮箱'); ?></th>
                                 <th><?php _e('会员组'); ?></th>
                                 <th><?php _e('系统组'); ?></th>
-                                <th><?php _e('注册时间'); ?></th>
-                                <th><?php _e('最后活跃'); ?></th>
-                                <th><?php _e('在线时长'); ?></th>
-                                <th><?php _e('威望'); ?></th>
+                                <th style="width: 100px ! important;">
+                                    <div class='table-header-title'><?php _e('注册时间'); ?></div>
+                                    <div class='table-header-icon'>
+                                        <div>
+                                            <a <?php if($_GET['reg_time'] == 'down' || !isset($_GET['reg_time'])){echo 'href='.get_js_url('/admin/user/list/reg_time-up').'';}?> style='display:inline-block;margin-top: 10px;'>
+                                                <?php if($_GET['reg_time'] == 'down' || !isset($_GET['reg_time'])){?><i class="icon-up"></i><?php }else{echo '&nbsp;';} ?>
+                                            </a>
+                                        </div>
+                                    
+                                    <?php if($_GET['reg_time'] == 'up' || !isset($_GET['reg_time'])){?>
+                                        <div class="table-header-icon-down" ><a href="<?php echo get_js_url('/admin/user/list/reg_time-down');?>" style=''><i class="icon-down"></i></a></div>
+                                    <?php } ?>
+                                    </div>
+                                </th>
+                                <th style="width: 100px ! important;">
+                                    <div class='table-header-title'><?php _e('最后活跃'); ?></div>
+                                    <div class='table-header-icon'>
+                                        <div>
+                                            <a <?php if($_GET['last_active'] == 'down' || !isset($_GET['last_active'])){echo 'href='.get_js_url('/admin/user/list/last_active-up').'';}?> style='display:inline-block;margin-top: 10px;'>
+                                                <?php if($_GET['last_active'] == 'down' || !isset($_GET['last_active'])){?><i class="icon-up"></i><?php }else{echo '&nbsp;';} ?>
+                                            </a>
+                                        </div>
+                                    
+                                    <?php if($_GET['last_active'] == 'up' || !isset($_GET['last_active'])){?>
+                                        <div class="table-header-icon-down" ><a href="<?php echo get_js_url('/admin/user/list/last_active-down');?>"><i class="icon-down"></i></a></div>
+                                    <?php } ?>
+                                    </div>
+                                </th>
+                                <th style="width: 100px ! important;">
+                                    <div class='table-header-title'><?php _e('在线时长'); ?></div>
+                                    <div class='table-header-icon'>
+                                        <div>
+                                            <a <?php if($_GET['online_time'] == 'down' || !isset($_GET['online_time'])){echo 'href='.get_js_url('/admin/user/list/online_time-up').'';}?> style='display:inline-block;margin-top: 10px;'>
+                                                <?php if($_GET['online_time'] == 'down' || !isset($_GET['online_time'])){?><i class="icon-up"></i><?php }else{echo '&nbsp;';} ?>
+                                            </a>
+                                        </div>
+                                    
+                                    <?php if($_GET['online_time'] == 'up' || !isset($_GET['online_time'])){?>
+                                        <div class="table-header-icon-down" ><a href="<?php echo get_js_url('/admin/user/list/online_time-down');?>"><i class="icon-down"></i></a></div>
+                                    <?php } ?>
+                                    </div>
+                                </th>
+                                <th style="width: 100px ! important;">
+                                    <div class='table-header-title'><?php _e('威望'); ?></div>
+                                    <div class='table-header-icon'>
+                                        <div>
+                                            <a <?php if($_GET['reputation'] == 'down' || !isset($_GET['reputation'])){echo 'href='.get_js_url('/admin/user/list/reputation-up').'';}?> style='display:inline-block;margin-top: 10px;'>
+                                                <?php if($_GET['reputation'] == 'down' || !isset($_GET['reputation'])){?><i class="icon-up"></i><?php }else{echo '&nbsp;';} ?>
+                                            </a>
+                                        </div>
+                                    
+                                    <?php if($_GET['reputation'] == 'up' || !isset($_GET['reputation'])){?>
+                                        <div class="table-header-icon-down" ><a href="<?php echo get_js_url('/admin/user/list/reputation-down');?>"><i class="icon-down"></i></a></div>
+                                    <?php } ?>
+                                    </div>
+                                </th>
                                 <?php if (get_setting('integral_system_enabled') == 'Y') { ?>
-                                <th><?php _e('积分'); ?></th>
+                                <th style="width: 100px ! important;">
+                                    <div class='table-header-title'><?php _e('积分'); ?></div>
+                                    <div class='table-header-icon'>
+                                        <div>
+                                            <a <?php if($_GET['integral'] == 'down' || !isset($_GET['integral'])){echo 'href='.get_js_url('/admin/user/list/integral-up').'';}?> style='display:inline-block;margin-top: 10px;'>
+                                                <?php if($_GET['integral'] == 'down' || !isset($_GET['integral'])){?><i class="icon-up"></i><?php }else{echo '&nbsp;';} ?>
+                                            </a>
+                                        </div>
+                                    
+                                    <?php if($_GET['integral'] == 'up' || !isset($_GET['integral'])){?>
+                                        <div class="table-header-icon-down" ><a href="<?php echo get_js_url('/admin/user/list/integral-down');?>"><i class="icon-down"></i></a></div>
+                                    <?php } ?>
+                                    </div>
+                                </th>
                                 <?php } ?>
                                 <th><?php _e('操作'); ?></th>
                             </tr>

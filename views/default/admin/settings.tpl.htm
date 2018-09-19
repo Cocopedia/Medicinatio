@@ -226,6 +226,24 @@
                 <tr>
                     <td>
                         <div class="form-group">
+                            <span class="col-sm-3 col-xs-3 control-label"><?php _e('微信快捷注册'); ?>:</span>
+                            <div class="col-sm-6 col-xs-8">
+                                <div class="btn-group mod-btn">
+                                    <label type="button" class="btn mod-btn-color">
+                                        <input type="radio" name="weixin_build_account" value="Y"<?php if ($this->setting['weixin_build_account'] == 'Y') { ?> checked="checked"<?php } ?> /> <?php _e('是'); ?>
+                                    </label>
+
+                                    <label type="button" class="btn mod-btn-color">
+                                        <input type="radio" name="weixin_build_account" value="N"<?php if ($this->setting['weixin_build_account'] != 'Y') { ?> checked="checked"<?php } ?> /> <?php _e('否'); ?>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
                             <span class="col-sm-3 col-xs-3 control-label"><?php _e('用户名规则'); ?>:</span>
                             <div class="col-sm-8 col-xs-8">
                                 <label class="checkbox-inline"><input type="radio" value="0" name="username_rule"<?php if ($this->setting['username_rule'] == 0) { ?> checked="checked"<?php } ?> /> <?php _e('不限制'); ?></label>
@@ -374,7 +392,7 @@
         <?php } else if ($_GET['category'] == 'functions') { ?>
         <div class="mod-head">
             <h3>
-                <span class="pull-left"><?php _e('站点功能'); ?></span>
+                <span class="pull-left"><?php _e('站点设置'); ?></span>
 
                 <span class="pull-right"><a href="javascript:;" onclick="AWS.ajax_post($('#settings_form'));" class="btn btn-xs btn-primary mod-site-save"><?php _e('快速保存'); ?></a></span>
             </h3>
@@ -531,7 +549,7 @@
                         <div class="form-group">
                             <span class="col-sm-4 col-xs-3 control-label"><?php _e('问题举报理由选项'); ?>:</span>
                             <div class="col-sm-5 col-xs-8">
-                                <textarea class="form-control textarea" name="report_reason" rows="5" ><?php echo get_setting('report_reason'); ?></textarea>
+                                <textarea class="form-control textarea" name="report_reason" rows="5" ><?php echo preg_replace("/(,)/","\n",get_setting('report_reason')); ?></textarea>
 
                                 <div class="help-block"><?php _e('每行填写一个举报理由'); ?></div>
                             </div>
@@ -603,7 +621,7 @@
         <?php } else if ($_GET['category'] == 'contents') { ?>
         <div class="mod-head">
             <h3>
-                <span class="pull-left"><?php _e('内容设置'); ?></span>
+                <span class="pull-left"><?php _e('功能设置'); ?></span>
 
                 <span class="pull-right"><a href="javascript:;" onclick="AWS.ajax_post($('#settings_form'));" class="btn btn-xs btn-primary mod-site-save"><?php _e('快速保存'); ?></a></span>
             </h3>
@@ -628,6 +646,17 @@
                             <div class="col-sm-6 col-xs-8">
                                 <label><input type="radio" name="advanced_editor_enable" value="Y"<?php if ($this->setting['advanced_editor_enable'] == 'Y') { ?> checked="checked"<?php } ?> /> <?php _e('CKEditor 编辑器'); ?></label>
                                 <label class="col-md-offset-1"><input type="radio" name="advanced_editor_enable" value="N"<?php if ($this->setting['advanced_editor_enable'] != 'Y') { ?> checked="checked"<?php } ?> /> <?php _e('纯文本编辑器'); ?></label>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('悬赏功能'); ?>:</span>
+                            <div class="col-sm-6 col-xs-8">
+                                <label><input type="radio" name="offer_reward" value="Y"<?php if ($this->setting['offer_reward'] == 'Y') { ?> checked="checked"<?php } ?> /> <?php _e('开启'); ?></label>
+                                <label class="col-md-offset-1"><input type="radio" name="offer_reward" value="N"<?php if ($this->setting['offer_reward'] != 'Y') { ?> checked="checked"<?php } ?> /> <?php _e('关闭'); ?></label>
                             </div>
                         </div>
                     </td>
@@ -901,7 +930,24 @@
                         </div>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('启用专栏'); ?>:</span>
+                            <div class="col-sm-6 col-xs-8">
+                                <div class="btn-group mod-btn">
+                                    <label type="button" class="btn mod-btn-color">
+                                        <input type="radio" name="enable_column" value="Y"<?php if ($this->setting['enable_column'] == 'Y') { ?> checked="checked"<?php } ?> /> <?php _e('是'); ?>
+                                    </label>
 
+                                    <label type="button" class="btn mod-btn-color">
+                                        <input type="radio" name="enable_column" value="N"<?php if ($this->setting['enable_column'] != 'Y') { ?> checked="checked"<?php } ?> /> <?php _e('否'); ?>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         <div class="form-group">
@@ -962,6 +1008,24 @@
                     </td>
                 </tr>
                 <?php } ?>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('启用自动保存草稿'); ?>:</span>
+                            <div class="col-sm-6 col-xs-8">
+                                <div class="btn-group mod-btn">
+                                    <label type="button" class="btn mod-btn-color">
+                                        <input type="radio" name="draft_enabled" value="Y"<?php if ($this->setting['draft_enabled'] == 'Y') { ?> checked="checked"<?php } ?> /> <?php _e('是'); ?>
+                                    </label>
+
+                                    <label type="button" class="btn mod-btn-color">
+                                        <input type="radio" name="draft_enabled" value="N"<?php if ($this->setting['draft_enabled'] != 'Y') { ?> checked="checked"<?php } ?> /> <?php _e('否'); ?>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
             </table>
         </div>
 

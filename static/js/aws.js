@@ -96,7 +96,7 @@ var AWS =
 		function _callback (result)
 		{
 			AWS.loading('hide');
-debugger
+
 			if (!result)
 			{
 				return false;
@@ -519,10 +519,12 @@ debugger
 			break;
 
 			case 'report':
-				var template = Hogan.compile(AW_TEMPLATE.reportBox).render(
+			var reson=data.item_reson.split(',');
+				var template = Hogan.compile(AW_TEMPLATE.reportBox,'').render(
 				{
 					'item_type': data.item_type,
-					'item_id': data.item_id
+					'item_id': data.item_id,
+					'item_reson': reson,
 				});
 			break;
 
@@ -725,8 +727,9 @@ debugger
 				break;
 
 				case 'report':
-					$('.aw-report-box select option').click(function ()
+					$('.aw-report-box ul.dropdown-menu li').click(function ()
 					{
+						$("#aw-report-tags-select").text($(this).attr('value'));
 						$('.aw-report-box textarea').text($(this).attr('value'));
 					});
 				break;
@@ -737,7 +740,34 @@ debugger
                         $('#editor_reply').html(result.answer_content.replace('&amp;', '&'));
 
                         var editor = CKEDITOR.replace( 'editor_reply' );
-
+						 setTimeout(editor.on('change',function(e){
+						              var a = e.editor.document ;
+						              var b = a.find("img");
+						              var count = b.count();
+						              for(var i=0;i<count;i++){
+						                       var src =b.getItem(i).$.src;
+						                       if(src.substring(0,10)=='data:image'){
+						                           var img1=src.split(',')[1]; 
+						                          var img2=window.atob(img1); 
+						                                $.ajax({
+						                                        type:"POST",
+						                                        url:G_BASE_URL + '/publish/ajax/paste/',
+						                                        async:false,
+						                                        data:{data:img1},
+						                                        dataType:'json',
+						                                        // processData: false,
+						                                        // contentType: false,
+						                                        success:function(json){
+						                                             var imgurl=json.path; 
+						                                             console.log(json);
+						                                              b.getItem(i).$.src=imgurl;
+						                                            var a =editor.document.$.getElementsByTagName("img")[i]; 
+						                                            a.setAttribute('data-cke-saved-src',imgurl);
+						                                                  }
+						                                });
+						                       }
+						              }
+						    }),400);
                         if (UPLOAD_ENABLE == 'Y')
 						{
 							var fileupload = new FileUpload('file', '.aw-edit-comment-box .aw-upload-box .btn', '.aw-edit-comment-box .aw-upload-box .upload-container', G_BASE_URL + '/publish/ajax/attach_upload/id-answer__attach_access_key-' + ATTACH_ACCESS_KEY, {'insertTextarea': '.aw-edit-comment-box #editor_reply', 'editor' : editor});
@@ -2577,6 +2607,7 @@ AWS.Init =
 
 						blur: function ()
 						{
+							$(".aw-invite-dropdown").hide();
 							if ($(this).val() == '')
 							{
 								$(comment_box_id).find('.aw-comment-box-btn').hide();
@@ -2623,7 +2654,12 @@ AWS.Init =
 	// 初始化文章评论框
 	init_article_comment_box: function(selector)
 	{
+		$("#comment_editor").blur(function(){
+							$(".aw-invite-dropdown").hide();
+			
+		});
 		$(document).on('click', selector, function ()
+	
 		{
 			var _editor_box = $(this).parents('.aw-item').find('.aw-article-replay-box');
 			if (_editor_box.length)
@@ -2684,18 +2720,24 @@ AWS.Init =
 						switch (data_type)
 						{
 							case 'publish':
+								var str = _topic_editor.find('#aw_edit_topic_title').val();
+								if(str.indexOf("/") != -1 || str.indexOf("-") != -1 || str.indexOf("&") != -1){
+									AWS.alert('话题标题不能包含 / - &');
+									return false;
+								}
+
 								_topic_editor.find('.tag-bar').prepend('<span class="topic-tag"><a class="text">' + _topic_editor.find('#aw_edit_topic_title').val() + '</a><a class="close" onclick="$(this).parents(\'.topic-tag\').remove();"><i class="icon icon-delete"></i></a><input type="hidden" value="' + _topic_editor.find('#aw_edit_topic_title').val() + '" name="topics[]" /></span>').hide().fadeIn();
 
 								_topic_editor.find('#aw_edit_topic_title').val('');
 							break;
 
 							case 'question':
-								$.post(G_BASE_URL + '/topic/ajax/save_topic_relation/', 'type=question&item_id=' + data_id + '&topic_title=' + encodeURIComponent(_topic_editor.find('#aw_edit_topic_title').val()), function (result)
+								   $.post(G_BASE_URL + '/topic/ajax/save_topic_relation/', 'type=question&item_id=' + data_id + '&topic_title=' + encodeURIComponent(_topic_editor.find('#aw_edit_topic_title').val()), function (result)
 								{
 									if (result.errno != 1)
 									{
 										AWS.alert(result.err);
-
+                                        console.info(result.err);
 										return false;
 									}
 
@@ -2744,7 +2786,7 @@ AWS.Init =
 									if (result.errno != 1)
 									{
 										AWS.alert(result.err);
-
+				
 										return false;
 									}
 

@@ -196,7 +196,7 @@ a.nckmore{float:right; line-height:52px; padding-right:15px; font-size:12px; col
 }
 .author-fav{ display:block; text-align:center; padding-top:15px;}
 .author-fav a{ display:inline-block; padding:2px 13px; font-size:12px; margin-left:10px;}
-a.active{ background:#499ef3; color:#FFF; border:1px solid #499ef3;}
+a.active{ background:#499ef3; color:#FFF; }
 a.author-sx{ border:1px solid #499ef3; color:#499ef3}
 
 .author-record {

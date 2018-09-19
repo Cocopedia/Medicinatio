@@ -322,6 +322,15 @@ var AW_TEMPLATE = {
 							'<input type="hidden" name="type" value="{{item_type}}" />'+
 							'<input type="hidden" name="target_id" value="{{item_id}}" />'+
 							'<div class="modal-body">'+
+							'<div class="dropdown reportBox" style="height: 34px;line-height: 34px;border: 1px solid #ccc;cursor: pointer;border-radius: 4px;">'+
+							'<div class="dropdown" data-toggle="dropdown" ><span id="aw-report-tags-select" class="aw-hide-txt">选择举报理由</span><a style="float: right;" href="javascript:;"><i class="icon icon-down"></i></a></div>'+
+							'<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" style="width: 100%;">'+
+							'{{#item_reson}}'+
+							  '<li value="{{.}}"><a href="javascript:void(0);">{{.}}</a></li>'+
+							'{{/item_reson}}'+
+							  
+							  '</ul>'+
+							'</div>'+
 								'<div class="alert alert-danger collapse error_message"><i class="icon icon-delete"></i> <em></em></div>'+
 								'<textarea class="form-control" name="reason" rows="5" placeholder="' + _t('请填写举报理由') + '..."></textarea>'+
 							'</div>'+

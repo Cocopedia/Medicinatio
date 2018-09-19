@@ -13,11 +13,11 @@ CKEDITOR.editorConfig = function( config ) {
 	config.toolbar_Full = [
 		//'FontSize','RemoveFormat'
 		//'Emojione'
-		 ['Cleanup','Bold','Italic','NumberedList','BulletedList', 'Blockquote', 'pbckcode', 'WecenterImage', 'WecenterAttach', 'WecenterLink', 'WecenterVideo', 'Maximize']
+		 ['Cleanup','Bold','Italic','NumberedList','BulletedList', 'Blockquote', 'pbckcode', 'WecenterImage', 'WecenterAttach', 'WecenterLink', 'WecenterVideo','Emojione', 'Maximize']
 	]
 	//emojione
 
-	config.extraPlugins = 'autolink,pbckcode,bbcode,wecenterattach,wecenterimage,wecenterlink,wecentervideo,font';
+	config.extraPlugins = 'autolink,pbckcode,bbcode,wecenterattach,wecenterimage,wecenterlink,wecentervideo,font,emojione';
 
 	config.resize_enabled = false;
 

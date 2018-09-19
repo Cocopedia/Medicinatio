@@ -7,6 +7,9 @@
         padding: 10px 10px;
     }
     .mod-body table td{border:1px solid #ddd}
+    .bdsharebuttonbox a{
+        margin: 6px 6px 6px 0;
+    }
 </style>
 <div class="aw-container-wrap">
     <div class="container">
@@ -102,21 +105,14 @@
                                     <a class="text-color-999 dropdown-toggle" data-toggle="dropdown" id="article_share">
                                         <i class="icon icon-share"></i> <?php _e('分享'); ?>
                                     </a>
-                                    <!--<div aria-labelledby="dropdownMenu" role="menu" class="aw-dropdown shareout pull-right">
+                                    <div class="aw-dropdown shareout pull-right bdsharebuttonbox">
                                         <ul class="aw-dropdown-list">
-                                            <li><a onclick="AWS.User.share_out({webid: 'tsina', content: $(this).parents('.aw-question-detail').find('.markitup-box')});"><i class="icon icon-weibo"></i> <?php _e('微博'); ?></a></li>
-											<li><a onclick="AWS.User.share_out({webid: 'qzone', content: $(this).parents('.aw-question-detail')});"><i class="icon icon-qzone"></i> <?php _e('QZONE'); ?></a></li>
-											<li><a onclick="AWS.User.share_out({webid: 'weixin', content: $(this).parents('.aw-question-detail')});"><i class="icon icon-wechat"></i> <?php _e('微信'); ?></a></li>
+                                            <li><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"> 微信</a></li>
+                                            <li><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ"> QQ</a></li>
+                                            <li><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"> 微博</a></li>
+                                            <li><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"> QQ空间</a></li>
                                         </ul>
-                                    </div>-->
-                                    <div class=" aw-dropdown shareout pull-right bdsharebuttonbox">
-										<ul class="aw-dropdown-list">
-										    <li><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间">QQ空间</a></li>
-										    <li><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">微博</a></li>
-										    <li><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a></li>
-										    <li><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ">QQ</a></li>
-										</ul>
-									</div>
+                                    </div>
 
                                     <em class="text-color-999"><?php echo date_friendly($this->article_info['add_time'], 604800, 'Y-m-d'); ?></em>
                                 </span>
@@ -270,7 +266,7 @@
                         <div class="mod-head">
                             <h3><?php _e('推荐内容'); ?></h3>
                         </div>
-                        <div class="mod-body">
+                        <div class="mod-body font-size-12">
                             <ul>
                                 <?php foreach($this->recommend_posts AS $key => $val) { ?>
                                 <li>
@@ -341,7 +337,9 @@
 
                 }
             },
-            "share":{bdSize:24}
+            "share" : [{
+                bdCustomStyle :"/static/api/css/share.css",
+            }]
         };
         with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
     });

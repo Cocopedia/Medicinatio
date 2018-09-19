@@ -14,7 +14,9 @@
 						<li><a href="ticket/publish/"><?php _e('工单'); ?></a></li>
 						<?php } ?>
 						<?php if ($this->user_info['permission']['publish_article']) { ?>
+						<?php if (is_website()) { ?>
 						<li><a href="publish/suggest/"><?php _e('建议'); ?></a></li>
+						<?php } ?>
 						<li><a href="publish/article/"><?php _e('文章'); ?></a></li>
 						
 						<?php } ?>
@@ -135,7 +137,9 @@
 									<label><input type="checkbox" class="pull-left" value="1" name="anonymous" />
 										<?php _e('匿名'); ?></label>
 									<?php } ?>
-
+									<?php if(get_setting('draft_enabled')!='Y'){ ?>
+                                        <a id="draft"><?php _e('保存草稿'); ?></a>
+                                    <?php } ?>
 								</span>
 								<a class="btn btn-large btn-success btn-publish-submit" id="publish_submit" onclick="AWS.ajax_post($('#question_form')); return false;"><?php _e('确认发起'); ?></a>
 							</div>

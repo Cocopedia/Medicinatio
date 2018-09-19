@@ -695,12 +695,28 @@
 							// 	console.log(value);
 							// } else 
 							if ( ( value = style[ 'font-size' ] ) ) {
-								var percentValue = value.match( /(\d+)%$/ ) ? value.match( /(\d+)%$/ ) : value.match( /(\d+)px$/ );
-								if ( percentValue ) {
-									value = percentValue[ 1 ];
-									tagName = 'size';
+								if(value.indexOf("px") == -1){
+										value = parseInt(value);
+										tagName = 'size';
+								}else{
+						            var reg = new RegExp("px","g");
+						            var theValue = value.replace(reg, "");
+						            	value=parseInt(theValue);
+										tagName = 'size';
 								}
+								// var percentValue = value.match( /(\d+)%$/ ) ? value.match( /(\d+)%$/ ) : value.match( /(\d+)px$/ );
+								// if ( percentValue ) {
+								// 	value = parseInt(percentValue[ 1 ]);
+								// 	tagName = 'size';
+								// }
 							}
+							// if ( ( value = style[ 'font-size' ] ) ) {
+							// 	var percentValue = value.match( /(\d+)%$/ ) ? value.match( /(\d+)%$/ ) : value.match( /(\d+)pt$/ );
+							// 	if ( percentValue ) {
+							// 		value = percentValue[ 1 ]+'pt';
+							// 		tagName = 'size';
+							// 	}
+							// }
 						} else if ( tagName == 'ol' || tagName == 'ul' ) {
 							if ( ( value = style[ 'list-style-type' ] ) ) {
 								switch ( value ) {

@@ -21,7 +21,7 @@
 		<a href="<?php echo $val['url']; ?>" target="_blank"><?php echo $val['name']; ?></a>
 		<?php } ?>
 	</p>
-
+	<div class="search-content"><?php echo htmlspecialchars($val['detail']['content']); ?></div>
 	<?php if ($val['type'] == 'users' AND $val['detail']['signature']) { ?>
 	<p class="text-color-999"><?php echo $val['detail']['signature']; ?></p>
 	<?php } ?>
@@ -47,4 +47,4 @@
 	</p>
 </div>
 <?php } ?>
-<?php } ?>
+<?php } ?> 

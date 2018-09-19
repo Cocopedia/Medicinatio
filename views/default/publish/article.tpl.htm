@@ -7,8 +7,9 @@
                     <div class="col-sm-12 col-md-9 aw-main-content">
                         <!-- tab 切换 -->
                         <ul class="nav nav-tabs aw-nav-tabs active">
-
+                            <?php if (is_website()) { ?>
                             <li><a href="publish/suggest/"><?php _e('建议'); ?></a></li>
+                            <?php } ?>
                             <li class="active"><a href="publish/article/"><?php _e('文章'); ?></a></li>
                             <?php if ($this->user_info['permission']['publish_question']) { ?>
                                 <li><a href="publish/"><?php _e('问题'); ?></a></li>
@@ -190,6 +191,9 @@
                                         <label><input type="checkbox" class="pull-left" value="1" name="do_delete"/>
                                             <?php _e('删除文章'); ?></label>
                                     <?php } ?>
+                                    <?php if(get_setting('draft_enabled')!='Y'){ ?>
+                                        <a id="draft"><?php _e('保存草稿'); ?></a>
+                                    <?php } ?>
 								</span>
                                     <a class="btn btn-large btn-success btn-publish-submit" id="publish_submit"
                                        onclick="AWS.ajax_post($('#question_form')); return false;"><?php _e('确认发起'); ?></a>
@@ -233,6 +237,8 @@
         }, function () {
             $('input[name="logo_img"]').val($('#logo_img').attr('src'));
         });
+
+        
     </script>
 
 <?php TPL::output('global/footer.tpl.htm'); ?>
