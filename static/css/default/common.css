@@ -995,7 +995,7 @@ blockquote {margin: 0 40px;padding: 0 15px;font-size: 14px;color: #777;border-le
 @media not all, (min-resolution: 192dpi) {
 	.aw-logo a {
 	    background-image: url("img/logo@2x.png");
-	    background-size: 60px auto;
+	    background-size: contain;
 	}
 }
 
