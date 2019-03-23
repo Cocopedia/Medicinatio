@@ -1,5 +1,7 @@
 // JavaScript Document
-
+if(navigator.userAgent.indexOf("Html5Plus") > -1 ){
+    document.body.classList.add("html5plus");
+}
 
 jQuery(function($){
 

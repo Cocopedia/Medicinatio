@@ -1,9 +1,5 @@
 @charset "UTF-8";
 
-.html5plus .html5plus-hide{
-    display:none
-}
-
 /* 重载bootstrap部分 */
 em{font-style: normal;}
 input[type="radio"], input[type="checkbox"]{margin:0;}
@@ -51,6 +47,9 @@ select{width: auto;}
 .btn-group.open .aw-dropdown, .aw-feed-list .more-operate.open .aw-dropdown, .aw-question-detail .more-operate.open .aw-dropdown, .aw-article-list .aw-item .mod-footer .more-operate.open .aw-dropdown{display: block;}
 
 /* 公共部分 */
+.html5plus .html5plus-hide{
+    display:none
+}
 html{height: 100%;}
 body{margin: 0;height: 100%;font-size:14px; line-height:160%;color: #666;background:url('img/bg.gif') repeat;}
 body, input, button, select, textarea, h1, h2, h3, h4, h5, h6{font-family:'Helvetica Neue', 'STHeiti', '微软雅黑', 'Microsoft YaHei', Helvetica,Arial,sans-serif;}
