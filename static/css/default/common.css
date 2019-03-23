@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+.html5plus .html5plus-hide{
+    display:none
+}
+
 /* 重载bootstrap部分 */
 em{font-style: normal;}
 input[type="radio"], input[type="checkbox"]{margin:0;}

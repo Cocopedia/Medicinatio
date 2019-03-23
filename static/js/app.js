@@ -2,6 +2,11 @@ var document_title = document.title;
 
 $(document).ready(function ()
 {
+    // html5+ class for html5+ env
+    if(navigator.userAgent.indexOf("Html5Plus") > -1 ){
+        document.body.classList.add("html5plus");
+    }
+
     // fix form bug...
     $("form[action='']").attr('action', window.location.href);
 
